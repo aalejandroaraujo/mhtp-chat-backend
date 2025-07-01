@@ -24,11 +24,13 @@ $ pip install -r requirements.txt
 $ uvicorn backend.app.main:app --reload
 ```
 
-## On Windows
+```bash
+
+#WINDOWS
 F:\mhtp-chat-backend> python -m venv .venv
 uvicorn backend.app.main:app --host 0.0.0.0 --port 8080 --reload
 ngrok http 8080   # execute on a different shell and copy the HTTPS URL into Typebot, or check in https://dashboard.ngrok.com/endpoints the current endpoints
-
+```
 
 For convenience on Unix systems you can also run `scripts/run_local.sh` which
 loads variables from `.env` before starting Uvicorn.
