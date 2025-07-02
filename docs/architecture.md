@@ -1,12 +1,15 @@
 ```mermaid
 graph TD
-  A[Typebot] -->|POST /chat| B(FastAPI backend)
-  B --> C(OpenAI Assistants API)
-  B <--> D[(Vector DB / storage)]
+  A[Typebot] --> B(Assistant Intake)
+  B -->|evaluate_intake_progress| C(Function 1)
+  B --> D(Assistant Advice)
+  D -->|risk_escalation_check| E(Function 2)
+  D -->|switch_chat_mode| F(Function 3)
+  D --> G(Assistant Summary)
+  G -->|save_session_summary| H(Function 4)
+  H --> I[NocoDB REST]
 ```
 
-- **Typebot**: frontend chatbot that sends user messages.
-- **FastAPI backend**: receives chat requests and orchestrates responses.
-- **OpenAI Assistants API**: TODO – integrate for generating replies.
-- **Vector DB / storage**: TODO – persist conversation context or embeddings.
-
+The monolithic FastAPI layer was removed. Each tool is now an Azure Function
+invoked directly by the OpenAI Assistant runtime. They share small utilities
+for OpenAI and NocoDB access but otherwise run independently.
